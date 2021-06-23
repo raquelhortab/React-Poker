@@ -164,6 +164,8 @@ const dealRiver = (state) => {
 }
 
 const showDown = (state) => {
+	console.log("showDown");
+	console.log(window.chips);
 	for (let player of state.players) {
 		const frequencyHistogram = {};
 		const suitHistogram = {};
@@ -394,6 +396,7 @@ const buildBestHand = (hand, bestRank, flushedSuit, flushCards, concurrentCardVa
 }
 
 const distributeSidePots = (state) => {
+
 	state.playerHierarchy = buildAbsolutePlayerRankings(state);
 	console.log("Ultimate Player Hierarchy Determined:")
 	console.log(state.playerHierarchy);
@@ -407,7 +410,9 @@ const distributeSidePots = (state) => {
 		...player,
 		roundEndChips: player.chips
 	}));
-	
+
+	if((typeof window.nextRound) == 'function') window.nextRound(state);
+
 	return state
 }
 

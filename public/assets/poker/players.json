@@ -1,0 +1,38 @@
+[
+    {
+      "name": {
+        "first": "Fada",
+        "last": "Fetillera"
+      },
+      "picture": {
+        "large": "/poker/assets/characters/fada.png"
+      }
+    },
+    {
+      "name": {
+        "first": "Gat",
+        "last": "Marrameu"
+      },
+      "picture": {
+        "large": "/poker/assets/characters/gat.png"
+      }
+    },
+    {
+      "name": {
+        "first": "Pirus",
+        "last": "Virus"
+      },
+      "picture": {
+        "large": "/poker/assets/characters/virus.png"
+      }
+    },
+    {
+      "name": {
+        "first": "Mag",
+        "last": "Mag"
+      },
+      "picture": {
+        "large": "/poker/assets/characters/mag.png"
+      }
+    }
+]

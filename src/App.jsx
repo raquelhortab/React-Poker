@@ -129,7 +129,7 @@ imageLoaderRequest.addEventListener("progress", e => {
     console.log(e);
 });
 
-imageLoaderRequest.open("GET", "./assets/table-nobg-svg-01.svg");
+imageLoaderRequest.open("GET", "/poker/assets/table-nobg-svg-01.svg");
 imageLoaderRequest.send();
 
     this.setState(prevState => ({
@@ -394,13 +394,13 @@ imageLoaderRequest.send();
     return (
       <div className='poker-app--background'>
         <div className="poker-table--container">
-          <img className="poker-table--table-image" src={"./assets/table-nobg-svg-01.svg"} alt="Poker Table" />
+          <img className="poker-table--table-image" src={"/poker/assets/table-nobg-svg-01.svg"} alt="Poker Table" />
           { this.renderBoard() }
           <div className='community-card-container' >
             { this.renderCommunityCards() }
           </div>
           <div className='pot-container'>
-            <img style={{height: 55, width: 55}} src={'./assets/pot.svg'} alt="Pot Value"/>
+            <img style={{width:200}} src={'/poker/assets/pot.svg'} alt="Pot Value"/>
             <h4> {`${this.state.pot}`} </h4>
           </div>
         </div>

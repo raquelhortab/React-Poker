@@ -2,6 +2,7 @@
   "name": "poker",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://cors-anywhere.herokuapp.com/",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "axios": "^0.19.0",
@@ -16,10 +17,24 @@
     "react-transition-group": "^4.0.1",
     "uuid": "^3.3.2"
   },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.10",
+    "@babel/preset-react": "^7.12.13",
+    "babel-loader": "^8.2.2",
+    "babel-preset-env": "^1.7.0",
+    "html-webpack-plugin": "^5.3.1",
+    "webpack": "^5.25.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "mix_files": "rm -f src/BooleanAttackComponents.jsx && awk 'FNR==1{print \"\"}1' src/*.jsx > src/BooleanAttackComponents.jsx",
+    "babel": "npx babel --presets react src/BooleanAttackComponents.jsx --out-file dist/js/BooleanAttackComponents.js",
+    "mix_and_compile": "npm run mix_files && npm run babel"
   }
 }

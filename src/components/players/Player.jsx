@@ -5,9 +5,9 @@ import HiddenCard from '../cards/HiddenCard';
 
 import PlayerStatusNotificationBox from "./PlayerStatusNotificationBox";
 
-const dealerChipImageURL = "/assets/chip.svg";
-const chipCountImageURL = "./assets/chips.svg";
-const playerBetImageURL = "./assets/bet.svg";
+const dealerChipImageURL = "/poker/assets/chip.svg";
+const chipCountImageURL = "/poker/assets/chips.svg";
+const playerBetImageURL = "/poker/assets/bet.svg";
 
 const Player = (props) => {
   const {
@@ -28,6 +28,11 @@ const Player = (props) => {
       bet
     }
   } = props;
+
+  if(props.player.name === window.playerName){
+    window.chips = props.player.chips;
+    if((typeof window.updatePoints) == 'function') window.updatePoints();
+  }
 
   const renderDealerChip = () => {
     if (hasDealerChip) {

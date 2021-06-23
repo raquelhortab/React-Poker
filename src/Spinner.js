@@ -4,7 +4,7 @@ const Spinner = props => {
 	return(
 		<div className="loading-container">
 			<div className='spinner-container' >
-				<img src={'/assets/chip.svg'} alt="Loading..."/>
+				<img src={'/poker/assets/chip.svg'} alt="Loading..."/>
 			</div>
 		</div>
 	)

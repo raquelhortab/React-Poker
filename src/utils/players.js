@@ -1,14 +1,14 @@
 import uuid from 'uuid/v1';
 import { handlePhaseShift, reconcilePot, anteUpBlinds, determineBlindIndices } from './bet.js';
 import { dealMissingCommunityCards, showDown, generateDeckOfCards, shuffle, dealPrivateCards } from './cards.js';
-
+import characters from './players.json';
 const axios = require('axios')
 // TODO Generate UUID to simulate User ID and really get a perf match on binding to players when determining winnings
 const generateTable = async () => {
 	const users = [{
 		id: uuid(),
-		name: 'Player 1',
-		avatarURL: '/assets/boy.svg',
+		name: window.playerName || 'Player',
+		avatarURL: window.avatarUrl || '/poker/assets/boy.svg',
 		cards: [],
 		showDownHand: {
 			hand: [],
@@ -27,8 +27,7 @@ const generateTable = async () => {
 		robot: false
 	}];
 
-	const response = await axios.get(`https://randomuser.me/api/?results=4&nat=us,gb,fr`);
-	response.data.results
+	characters
 		.map(user => {
 			const randomizedChips = Math.floor(Math.random() * (20000 - 18000)) + 18000;
 			return ({
