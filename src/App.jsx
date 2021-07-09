@@ -154,10 +154,10 @@ imageLoaderRequest.send();
   }
 
   handleBetInputChange = (val, min, max) => {
-    if (val === '') val = min
-    if (val > max) val = max
+    // if (val === '') val = min
+    // if (val > max) val = max
       this.setState({
-        betInputValue: parseInt(val, 10),
+        betInputValue: parseInt(val, 10) || 0,
       });
   }
   
@@ -187,9 +187,17 @@ imageLoaderRequest.send();
   }
 
   handleBetInputSubmit = (bet, min, max) => {
+    if (bet < min) {
+      this.setState({betInputValue: parseInt(min, 10),});
+      return false;
+    }
+    if (bet > max) {
+      this.setState({betInputValue: parseInt(max, 10),});
+      return false;
+    }
     const {playerAnimationSwitchboard, ...appState} = this.state;
     const { activePlayerIndex } = appState;
-    this.pushAnimationState(activePlayerIndex, `${renderActionButtonText(this.state.highBet, this.state.betInputValue, this.state.players[this.state.activePlayerIndex])} ${(bet > this.state.players[this.state.activePlayerIndex].bet) ? (bet) : ""}`);;
+    this.pushAnimationState(activePlayerIndex, `${renderActionButtonText(this.state.highBet, this.state.betInputValue, this.state.players[this.state.activePlayerIndex], min, max)} ${(bet > this.state.players[this.state.activePlayerIndex].bet) ? (bet) : ""}`);;
     const newState = handleBet(cloneDeep(appState), parseInt(bet, 10), parseInt(min, 10), parseInt(max, 10));
       this.setState(newState, () => {
         if((this.state.players[this.state.activePlayerIndex].robot) && (this.state.phase !== 'showdown')) {
@@ -358,8 +366,8 @@ imageLoaderRequest.send();
     const max = players[activePlayerIndex].chips + players[activePlayerIndex].bet
     return ((players[activePlayerIndex].robot) || (phase === 'showdown')) ? null : (
       <React.Fragment>
-        <button className='action-button' onClick={() => this.handleBetInputSubmit(betInputValue, min, max)}>
-          {renderActionButtonText(highBet, betInputValue, players[activePlayerIndex])}
+        <button className='action-button' onClick={() => this.handleBetInputSubmit(betInputValue, min, max)} style={{backgroundColor: (betInputValue >= min && betInputValue <= max ? "#2adb2a" : "grey")}}>
+          {renderActionButtonText(highBet, betInputValue, players[activePlayerIndex], min, max)}
         </button>
         <button className='fold-button' onClick={() => this.handleFold()}>
           Fold
@@ -410,7 +418,7 @@ imageLoaderRequest.send();
               { this.renderActionButtons() }
           </div>
           <div className='slider-boi'>
-            { (!this.state.loading)  && renderActionMenu(highBet, players, activePlayerIndex, phase, this.handleBetInputChange)}
+            { (!this.state.loading)  && renderActionMenu(highBet, players, activePlayerIndex, phase, this.handleBetInputChange, this.state.betInputValue)}
           </div>
         </div>
       </div>

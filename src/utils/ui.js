@@ -36,7 +36,8 @@ const renderUnicodeSuitSymbol = (suit) => {
 	}
 }
 
-const renderActionButtonText = (highBet, betInputValue, activePlayer) => {
+const renderActionButtonText = (highBet, betInputValue, activePlayer, min, max) => {
+	if(betInputValue < min || betInputValue > max) return "-";
 	if ((highBet === 0) && (betInputValue === 0)) {
 		return 'Check'
 	} else if ((highBet === betInputValue)) {
@@ -47,7 +48,7 @@ const renderActionButtonText = (highBet, betInputValue, activePlayer) => {
 		return 'All-In!'
 	} else if (betInputValue > highBet) {
 		return 'Raise'
-	} 
+	}
 }
 
 const renderNetPlayerEarnings = (endChips, startChips) => {
@@ -124,16 +125,21 @@ const renderShowdownMessages = (showDownMessages) => {
 	})
 }
 
-const renderActionMenu = (highBet, players, activePlayerIndex, phase, changeSliderInputFn) => {
+const renderActionMenu = (highBet, players, activePlayerIndex, phase, changeSliderInputFn, value) => {
 	const min = determineMinBet(highBet, players[activePlayerIndex].chips, players[activePlayerIndex].bet)
 	const max = players[activePlayerIndex].chips + players[activePlayerIndex].bet
+	const handleInputChange = function(){
+		changeSliderInputFn(document.getElementById('bet-input').value,min,max);
+
+	}
 	return(
 		(phase === 'betting1' || phase === 'betting2' || phase === 'betting3' || phase === 'betting4') ? (players[activePlayerIndex].robot) ? (<h4> {`Current Move: ${players[activePlayerIndex].name}`}</h4>) : (
 			<React.Fragment>
+			<input type={"number"} style={{margin:"0 30px 0 0"}} value={value === 0 ? null : value} className='action-input' id={'bet-input'} onChange={handleInputChange}/>
 			<Slider
 				rootStyle={sliderStyle}
 				domain={[min, max]}
-				values={[min]}
+				values={[Math.min(Math.max(value||0, min), max)]}
 				step={1}
 
 				onChange={changeSliderInputFn}
